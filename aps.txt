@@ -1,0 +1,542 @@
+package maingame;
+
+public class Historia {
+	public static void Intro(){
+		Logicajogo.limparTela();
+		Logicajogo.separador(1);
+		System.out.println("História");
+		Logicajogo.separador(1);
+		System.out.println("historia");
+		System.out.println("historia");
+		System.out.println("historia");
+		Logicajogo.continuar();
+	}
+	
+	public static void PrimeiroAto1(){
+		Logicajogo.limparTela();
+		Logicajogo.separador(1);
+		System.out.println("ATO I - Parte 1");
+		Logicajogo.separador(1);
+		System.out.println("h");
+		System.out.println("h");
+		System.out.println("h");
+		System.out.println("h");
+		Logicajogo.continuar();
+	}
+	public static void PrimeiroAto2(){
+		Logicajogo.limparTela();
+		Logicajogo.separador(1);
+		System.out.println("ATO I - Parte 2");
+		Logicajogo.separador(1);
+		System.out.println("h");
+		System.out.println("h");
+		System.out.println("h");
+		Logicajogo.continuar();
+	}
+	
+	public static void SegundoAto1(){
+		Logicajogo.limparTela();
+		Logicajogo.separador(1);
+		System.out.println("ATO II - Parte 1");
+		Logicajogo.separador(1);
+		System.out.println("h");
+		System.out.println("h");
+		System.out.println("h");
+		Logicajogo.continuar();
+	}
+	public static void SegundoAto2(){
+		Logicajogo.limparTela();
+		Logicajogo.separador(1);
+		System.out.println("ATO II - Parte 2");
+		Logicajogo.separador(1);
+		System.out.println("h");
+		System.out.println("h");
+		System.out.println("h");
+		System.out.println("h");
+		Logicajogo.continuar();
+	}
+	
+	public static void TerceiroAto1(){
+		Logicajogo.limparTela();
+		Logicajogo.separador(30);
+		System.out.println("ACT III - INTRO");
+		Logicajogo.separador(30);
+		System.out.println("h");
+		System.out.println("h");
+		System.out.println("h");
+		System.out.println("h");
+		Logicajogo.continuar();
+	}
+	public static void TerceiroAto2(){
+		Logicajogo.limparTela();
+		Logicajogo.separador(30);
+		System.out.println("ACT III - OUTRO");
+		Logicajogo.separador(30);
+		System.out.println("h");
+		Logicajogo.continuar();
+	}
+	
+	public static void QuartoAto1(){
+		Logicajogo.limparTela();
+		Logicajogo.separador(30);
+		System.out.println("ACT IV - INTRO");
+		Logicajogo.separador(30);
+		System.out.println("h");
+		Logicajogo.continuar();
+	
+	
+	}
+	public static void Final(Jogador jogador){
+		Logicajogo.limparTela();
+		Logicajogo.separador(30);
+		System.out.println("Parabéns, " + jogador.nome + "! Você derrotou o vilão e salvou o mundinho.");
+		Logicajogo.separador(30);
+		System.out.println("agradecimentos");
+	}
+}
+
+
+package maingame;
+
+import java.util.Scanner;
+
+public class Logicajogo {
+ static Scanner scanner = new Scanner (System.in);
+ 
+ static Jogador jogador;
+ 
+ public static boolean rodarJogo;
+ 
+ public static String[] encontros = { "Batalha", "Batalha", "Batalha", "Descanso", "Descanso"};
+ public static String[] inimigos = { "Selvagens nível 1", "Selvagens nível 2", "Selvagens nível 3", "Selvagens nível 4", "Líder Selvagens"};
+ 
+ public static int local = 0, ato=1;
+ public static String[] locais = { "mundo 1", "mundo 2", "mundo 3", "mundo 4"};
+ 
+ public static int lerInt(String prompt, int escolhas ) {
+	 int input;
+	 do {
+		System.out.println(prompt);
+		 try {
+			 input = Integer.parseInt(scanner.next());
+			
+		 } catch(Exception e) {
+			 input = -1;
+			 System.out.println("Insira um número");
+		 }
+		 } while (input < 1 ||  input > escolhas );
+		 return input;
+	 }
+	 public static void limparTela() {
+	 for(int i = 0; i < 100; i++)
+		 System.out.println();
+ }
+ 	public static void separador(int n) {
+ 		for (int i = 0; i < n; i++)
+ 			System.out.print("-");
+ 		System.out.println();
+ 	}
+ 	public static void texto1(String titulo) {
+ 		separador(30);
+ 		System.out.println(titulo);
+ 		separador(30);
+ 	}
+ 		public static void continuar() {
+ 			System.out.println("\nInsira qualquer coisa para continuar..");
+ 			scanner.next();
+ 		}
+ 	
+		public static void startGame() {
+			boolean nomeSet = false;
+			String nome;
+			
+			
+			separador(30);
+			separador(40);
+			System.out.println("nome do jogo");
+			System.out.println("APS 3º semestre");
+			separador(40);
+			separador(30);
+			continuar();
+			
+			do {
+			
+			limparTela();
+			texto1("Qual o seu nome?");
+			nome = scanner.next();
+			
+			limparTela();
+			texto1("Seu nome é " + nome + "\nEstá correto?");
+			System.out.println("(1) SIM!");
+			System.out.println("(2) Não, desejo trocar meu nome.");
+			int input = lerInt("->", 2);
+			if( input == 1)
+				nomeSet = true;
+			} while (!nomeSet);
+			
+			Historia.Intro();
+			
+			jogador = new Jogador(nome);
+			
+			Historia.PrimeiroAto1();
+			
+			rodarJogo = true;
+			
+			gameLoop();
+		}
+		public static void checkAto() {
+			if(jogador.xp >= 10 &&  ato == 1) {
+				ato = 2;
+				local = 1;
+				
+				Historia.PrimeiroAto2();
+				jogador.escolhaCaract();
+				
+				Historia.SegundoAto1();
+				
+				inimigos[0]="selvagem 1";
+				
+				encontros[0] ="Batalha";
+				
+				
+				jogador.hp = jogador.maxHp;
+			}else if(jogador.xp >=50 && ato == 2) {
+				ato = 3;
+				local =2;
+				
+				Historia.SegundoAto2();
+				jogador.escolhaCaract();
+				
+				Historia.TerceiroAto1();
+				
+			} else if (jogador.xp >= 100 && ato == 3) {
+				ato= 4;
+				local = 3;
+				
+				Historia.TerceiroAto2();
+				jogador.escolhaCaract();
+				
+				Historia.QuartoAto1();
+				
+				jogador.hp = jogador.maxHp;
+			} 
+		}
+		
+		public static void randomEncontro() {
+			
+			int encontro = (int) (Math.random()* encontros.length);
+			if (encontros[encontro].equals("Batalha")) {
+				randomBatalha();
+			} else if (encontros[encontro].equals("Descanso")) {
+			} else {
+				loja();
+			}
+		}
+		
+		public static void continuarHist() {
+
+			checkAto();
+			if (ato !=4)
+				randomEncontro();
+			
+			else if (ato == 4) {
+				continuar();
+				randomBatalha();
+				
+			}
+			
+		}
+		public static void PersonagemInfo() {
+			limparTela();
+			texto1(" Informações do personagem ");
+			System.out.println(jogador.nome + "\tHP: " + jogador.hp + "/" + jogador.maxHp);
+			separador(30);
+			System.out.println("XP: " + jogador.xp + "\tMoedas: " + jogador.moeda);
+			separador(20);
+			System.out.println("Poções : " + jogador.poçao);
+			separador(20);
+			
+		 if (jogador.nAumentoAtaque > 0) {
+			System.out.println(" Característica ofensiva: " + jogador.aumentoAtaque[jogador.nAumentoAtaque - 1]);
+			separador(30);
+		}
+		 if (jogador.nAumentoDef > 0) {
+			 System.out.println("Característica defensiva: " + jogador.aumentoDef [jogador.nAumentoDef - 1]);
+			 
+		 }
+		 continuar();
+		}
+		
+		 public static void loja(){
+				limparTela();
+				texto1("Encontrou um estranho.\nEle te ofereceu algo:");
+				int preço = (int) (Math.random()* (10 + jogador.poçao * 3) + 10 + jogador.poçao);
+				System.out.println("- Poção Mágica: " + preço + " moedas.");
+				separador(20);
+				System.out.println("Gostaria de comprar um?\n(1) sim!\n(2) não obrigado.");
+				int input = lerInt("-> ", 2);
+				if(input == 1){
+					limparTela();
+					
+					if(jogador.moeda >= preço){
+						texto1("Você comprou uma poção mágica por " + preço + "moedas.");
+						jogador.poçao++;
+						jogador.moeda -= preço;
+					}else
+						texto1("Você não tem moedas suficientes...");
+					continuar();
+				}
+		 }
+		 
+		 public static void takeDescanso(){
+				limparTela();
+				if(jogador.descansosLeft >= 1){
+					texto1("Você quer descansar? (" + jogador.descansosLeft + " descanso(s) sobrando).");
+					System.out.println("(1) Sim \n(2) Não");
+					int input = lerInt("-> ", 2);
+					if(input == 1){
+						
+						limparTela();
+						if(jogador.hp < jogador.maxHp){
+							int hpRecuperado = (int) (Math.random() * (jogador.xp/4 + 1) + 10);
+							jogador.hp += hpRecuperado;
+							if(jogador.hp > jogador.maxHp)
+								jogador.hp = jogador.maxHp;
+							System.out.println("Você descansou e restaurou " + hpRecuperado + " de vida.");
+							System.out.println("Agora está com " + jogador.hp + "/" + jogador.maxHp + " de vida.");
+							jogador.descansosLeft --;
+						}else
+							System.out.println("Sua vida está cheia, não precisa descansar!");
+					}
+					continuar();
+				}
+			}
+		public static void randomBatalha() {
+			limparTela();
+			texto1("Você encontrou um inimigo");
+			continuar();
+			
+			batalha(new Inimigo( inimigos[(int)(Math.random()* inimigos.length)], jogador.xp));
+		
+		}
+		
+		public static void batalha(Inimigo inimigos) {
+			while (true) {
+				limparTela();
+				texto1(inimigos.nome + "\nHP: " + inimigos.hp + "/" + inimigos.maxHp);
+				texto1(jogador.nome + "\nHP: " + jogador.hp + "/" + jogador.maxHp);
+				System.out.println("Escolha uma ação: ");
+				separador(20);
+				System.out.println("(1) - Lutar");
+				System.out.println("(2) - Poção");
+				int input = lerInt("->", 2);
+
+				if (input == 1) {
+					int dano = jogador.ataque() - inimigos.defesa();
+					int danoRecebido = inimigos.ataque() - jogador.defesa();
+
+					if (danoRecebido < 0) {
+						dano -= danoRecebido / 2;
+						danoRecebido = 0;
+					}
+					if (dano < 0) 
+						dano = 0;
+
+					jogador.hp -= danoRecebido;
+					inimigos.hp -= dano;
+
+					limparTela();
+					texto1("BATALHA");
+					System.out.println("Você causou " + dano + " de dano no " + inimigos.nome);
+					separador(15);
+					System.out.println("O " + inimigos.nome + " causou " + danoRecebido + " de dano em você");
+					continuar();
+					
+
+					if (jogador.hp <= 0) {
+						jogadorDied();
+						break;
+					} else if (inimigos.hp <= 0) {
+						limparTela();
+						texto1("Você derrotou o " + inimigos.nome + "!");
+						jogador.xp += inimigos.xp;
+						System.out.println("Você ganhou " + inimigos.xp + " XP!");
+
+						boolean ganhoDescanso = (Math.random() * 5 + 1 <= 2.25);
+						int ganhoMoeda = (int) (Math.random() * inimigos.xp);
+
+						if (ganhoDescanso) {
+							jogador.descansosLeft++;
+							System.out.println("Você ganhou um descanso");
+						}
+						if (ganhoMoeda > 0) {
+							jogador.moeda += ganhoMoeda;
+							System.out.println("Você coletou " + ganhoMoeda + " moedas do corpo do " + inimigos.nome + "!");
+						}
+
+						continuar();
+						break;
+					}
+				} else if (input == 2) {
+					limparTela();
+					if (jogador.poçao > 0 && jogador.hp < jogador.maxHp) {
+						texto1("Deseja beber uma poção?) " + jogador.poçao + " restante(s)).");
+						System.out.println("(1) Sim\n(2) Talvez depois.");
+						input = lerInt("-> ", 2);
+						if (input == 1) {
+							jogador.hp = jogador.maxHp;
+							/* limparTela(); */
+							texto1("Você tomou a poção e restaurou sua vida em " + jogador.maxHp);
+							continuar();
+						}
+					} else {
+						texto1("Você não tem poções ou está com a vida cheia");
+						continuar();
+
+						}
+				  }
+			}
+	}
+		public static void abrirMenu() {
+			limparTela();
+			texto1(locais[local]);
+			System.out.println("Escolha uma ação: ");
+			/*separador(30); */
+			System.out.println("(1) Continue a Jornada");
+			System.out.println("(2) Informações do personagem");
+			System.out.println("(3) Sair do jogo");
+		}
+		public static void finalBattle(){
+			
+			batalha(new Inimigo("Filho da putinha", 300));
+			Historia.Final(jogador);
+			rodarJogo = false;
+		}
+		public static void jogadorDied() {
+			limparTela();
+			texto1("Você morreu...");
+			texto1("Você ganhou "+ jogador.xp + "XP na sua jornada, tente ganhar mais na próxima aventura!");
+			System.out.println("Obrigada por jogar");
+			rodarJogo = false;
+		}
+		
+		public static void gameLoop() { /*  loops são usados para executar uma sequencia de instruções / funções repetidamente quando a função é true.*/
+			while(rodarJogo) {
+				abrirMenu();
+				int input = lerInt("->", 3);
+				if(input == 1)
+					continuarHist();
+				else if(input == 2)
+					PersonagemInfo();
+				else
+					rodarJogo = false;
+			}
+		}
+		}
+
+package maingame;
+
+public class main {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		Logicajogo.startGame();
+
+	}
+}
+
+
+package maingame;
+
+public abstract class Personagem {
+
+	public String nome;
+	public int  maxHp, hp, xp;
+	
+	public Personagem( String nome,int maxHp, int xp) {
+		this.nome = nome;
+		this.maxHp = maxHp;
+		this.xp = xp;
+		this.hp = maxHp;
+		
+	}
+	public abstract int ataque();
+	public abstract int defesa();
+}
+
+
+package maingame;
+
+
+public class Jogador extends Personagem {
+	
+	public int nAumentoAtaque, nAumentoDef;
+	
+	int moeda, descansosLeft, poçao;
+	
+	
+	public String[] aumentoAtaque= { "Forte", "Super Força", "Grande Ataque","Ultimate"}; 
+	public String[] aumentoDef = { "Defensivo", "Armadura ferro", "Armadura bronze", "Armadura ouro"};
+
+	public Jogador(String nome) {
+		super(nome, 50, 100);
+		
+		// TODO Auto-generated constructor stub
+		this.nAumentoAtaque = 0;
+		this.nAumentoDef = 0;
+		this.moeda = 5;
+		this.descansosLeft = 1;
+		this.poçao = 5;
+		escolhaCaract();
+	}
+	
+	public int ataque () {
+		return (int) (Math.random()*(xp/4 + nAumentoAtaque*3 + 3) + xp/10 + nAumentoAtaque*2 + nAumentoDef + 1);
+	}
+
+	public int defesa() {
+		return (int) (Math.random()*(xp/4 + nAumentoDef*3 + 3) + xp/10 + nAumentoDef*2 + nAumentoAtaque + 1);
+	}
+	
+	public void escolhaCaract() {
+		Logicajogo.limparTela();
+		Logicajogo.texto1("Escolha uma característica:");
+		System.out.println("(1)" + aumentoAtaque[nAumentoAtaque]+ "!");
+		System.out.println("(2)" + aumentoDef[nAumentoDef]+ "!");
+		
+		int input = Logicajogo.lerInt("->", 2);
+		Logicajogo.limparTela();
+		
+		if(input==1) {
+			Logicajogo.texto1("Você escolheu " + aumentoAtaque[nAumentoAtaque]+ "!");
+			nAumentoAtaque++;
+		} else {
+			Logicajogo.texto1("Você escolheu " + aumentoDef[nAumentoDef]+ "!");
+			nAumentoDef++;	
+		}
+		Logicajogo.continuar();	}
+}
+
+package maingame;
+
+public class Inimigo extends Personagem{
+
+	int jogadorXp;
+	
+	/* funçãoi Math =  método para retornar qualquer valor como positivo, mesmo se for inserido de forma negativo */
+	public Inimigo(String nome, int  jogadorXp) {
+		super(nome, (int) (Math.random()* jogadorXp + jogadorXp/3 + 5), (int) (Math.random()*(jogadorXp/4 + 2)+1));
+		
+		this.jogadorXp = jogadorXp;
+	}
+
+	public int ataque() {
+		return (int) (Math.random()* (jogadorXp/4 +1 ) + xp/4 + 3);
+	}
+
+	public int defesa() {
+		return (int) (Math.random()* (jogadorXp/4 +1 ) + xp/4 + 3);
+	}
+
+}
